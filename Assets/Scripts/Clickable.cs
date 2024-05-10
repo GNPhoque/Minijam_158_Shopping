@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class Clickable : MonoBehaviour
 {
+    public string clickableName;
     public UnityEvent eventWhenClicked;
     public bool debug;
 
@@ -16,6 +17,16 @@ public class Clickable : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnMouseEnter()
+    {
+        GameManager.instance.SetAction(clickableName);
+    }
+
+    private void OnMouseExit()
+    {
+        GameManager.instance.SetAction(GameManager.NONE_INTERACTABLE);
     }
 
     private void OnMouseDown()
