@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject couchUI;
     [SerializeField] GameObject computerUI;
     [SerializeField] GameObject tableUI;
+    [SerializeField] GameObject tableCardUI;
     [SerializeField] GameObject kitchenUI;
 
     [Header("Clickables")]
@@ -190,7 +191,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(float spent)
     {
-        scoreText.text = $"{spent}$";
+        scoreText.text = $"Money spent:\n${spent}";
     }
 
     public void GameOver(bool caught = false)
@@ -244,6 +245,7 @@ public class GameManager : MonoBehaviour
                 break;
             case Areas.Table:
                 tableUI.SetActive(true);
+                tableCardUI.SetActive(false);
                 tableClickables.SetActive(true);
                 InitializeTable();
                 break;
