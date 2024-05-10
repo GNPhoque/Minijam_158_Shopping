@@ -37,12 +37,19 @@ public class GameManager : MonoBehaviour
     public Mom momObject;
     public int startMomDelay;
     public int endMomDelay;
+	// How much time the player has to react to mom
+	public float momAggresion = 2f;
 
-    [Header("UI")]
+	[Header("UI")]
     public TMP_Text actionText;
+    public TMP_Text timerText;
+    
+    [Header("Timer Settings")]
+	[SerializeField] float timeLeft;
+	[SerializeField] float alertStartTime;
+	[SerializeField] bool alertStarted;
+	[SerializeField] AudioClip timeAlert;
 
-    // How much time the player has to react to mom
-    public float momAggresion = 2f;
 
     private void Awake()
     {
@@ -58,6 +65,24 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(MomTick());
     }
+
+    private void Update()
+    {
+		if (timeLeft > 0)
+		{
+			timeLeft -= Time.deltaTime;
+			DisplayTime(timeLeft);
+			if (timeLeft < alertStartTime && !alertStarted)
+			{
+				alertStarted = true;
+                //TODO : Find AudioSource to play timeAlert sound;
+			}
+		}
+		else
+		{
+			//TODO : GameOver();
+		}
+	}
 
     public void SetAction(string actionName)
     {
@@ -121,5 +146,13 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("you lost");
         SceneManager.LoadScene(0);
-    }
+	}
+
+	void DisplayTime(float time)
+	{
+		time++;
+		float minutes = Mathf.FloorToInt(time / 60f);
+		float seconds = Mathf.FloorToInt(time % 60f);
+		timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+	}
 }
