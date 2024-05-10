@@ -8,10 +8,9 @@ public class Clickable : MonoBehaviour, IPointerClickHandler
     public UnityEvent eventWhenClicked;
     public bool debug;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
+        if (clickableName != "") GetComponent<SpriteRenderer>().enabled = debug;
     }
 
     // Update is called once per frame
