@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel.Design;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,13 @@ public enum PlayerActivity
     SittingOnCouch,
     AtTable,
     StealingPhone
+}
+
+public enum Areas
+{
+    Couch,
+    Table, 
+    Kitchen
 }
 
 public class GameManager : MonoBehaviour
@@ -46,6 +54,17 @@ public class GameManager : MonoBehaviour
 	[SerializeField] TextMeshProUGUI scoreText;
 	[SerializeField] TextMeshProUGUI gameOverScoreText;
 
+    [Header("Areas")]
+    [SerializeField] GameObject couchUI;
+    [SerializeField] GameObject computerUI;
+    [SerializeField] GameObject tableUI;
+    [SerializeField] GameObject kitchenUI;
+
+    [Header("Clickables")]
+    [SerializeField] GameObject couchClickables;
+    [SerializeField] GameObject tableClickables;
+    [SerializeField] GameObject kitchenClickables;
+
     [Header("Scene References")]
     [SerializeField] GameObject gameoverPanel;
     [SerializeField] GameObject caughtText;
@@ -68,6 +87,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         player.state = PlayerState.Couch;
+        player.activity = PlayerActivity.SittingOnCouch;
         Debug.Log("Start Game!");
 
         StartCoroutine(MomTick());
@@ -91,16 +111,19 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-    public void SetAction(string actionName)
+    public void SetActionText(string actionName)
     {
         actionText.text = actionName;
     }
+
+    #region Mom Functions
 
     int GetRandomMomDelay()
     {
         return UnityEngine.Random.Range(startMomDelay, endMomDelay);
     }
 
+    // Mom Functions
     IEnumerator MomTick()
     {
         int spawnIn = GetRandomMomDelay();
@@ -147,6 +170,8 @@ public class GameManager : MonoBehaviour
         else if (momAction == "NONE") Debug.LogWarning("Mom didn't get an action?");
     }
 
+    #endregion
+
     public void CheckIfGameOver()
     {
         if (playerChances > 0) return;
@@ -163,6 +188,11 @@ public class GameManager : MonoBehaviour
 		timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 	}
 
+    public void UpdateScore(float spent)
+    {
+        scoreText.text = $"{spent}$";
+    }
+
     public void GameOver(bool caught = false)
     {
         Time.timeScale = 0f;
@@ -173,13 +203,98 @@ public class GameManager : MonoBehaviour
         gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", spentMoney);
 	}
 
-    public void UpdateScore(float spent)
+    public void FlickBack()
     {
-        scoreText.text = $"{spent}$";
+        print("Flicked Back");
+
+        if (player.state != PlayerState.Couch) InitializeArea(Areas.Couch);
+        
+        if (player.IsOnComputer())
+        {
+            computerUI.SetActive(false);
+            couchClickables.SetActive(true);
+        }
     }
 
-	public static void ReloadScene()
+    #region Area Functions
+    public void DisableAllAreas()
+    {
+        couchClickables.SetActive(false);
+        couchUI.SetActive(false);
+
+        computerUI.SetActive(false);
+
+        tableClickables.SetActive(false);
+        tableUI.SetActive(false);
+
+        kitchenClickables.SetActive(false);
+        kitchenUI.SetActive(false);
+    }
+
+    public void InitializeArea(Areas area)
+    {
+        DisableAllAreas();
+
+        switch (area)
+        {
+            case Areas.Couch:
+                couchUI.SetActive(true);
+                couchClickables.SetActive(true);
+                SetActivity(2);
+                break;
+            case Areas.Table:
+                tableUI.SetActive(true);
+                tableClickables.SetActive(true);
+                InitializeTable();
+                break;
+            case Areas.Kitchen:
+                kitchenUI.SetActive(true);
+                kitchenClickables.SetActive(true);
+                InitializeKitchen();
+                break;
+        }
+    }
+
+    public void InitializeArea(int area)
+    {
+        Areas selectedArea = (Areas) area;
+        InitializeArea(selectedArea);
+    }
+
+    #endregion
+
+    #region PlayerActions
+    // Player Actions
+    public void InitializeComputer(int compType)
+    {
+        couchClickables.SetActive(false);
+        computerUI.SetActive(true);
+
+        // CompType 0 is Shopping, while 1 is Gaming
+        player.activity = (PlayerActivity)compType;
+    }
+
+    public void InitializeTable()
+    {
+        player.state = PlayerState.Table;
+        player.activity = PlayerActivity.AtTable;
+    }
+    
+    public void InitializeKitchen()
+    {
+        player.state = PlayerState.Kitchen;
+        player.activity = PlayerActivity.StealingPhone;
+    }
+
+    public void SetActivity(int activityInt)
+    {
+        player.activity = (PlayerActivity)activityInt;
+    }
+
+    #endregion
+
+    public static void ReloadScene()
 	{
-		SceneManager.LoadScene(0, LoadSceneMode.Single);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
 	}
 }

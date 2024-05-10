@@ -21,12 +21,12 @@ public class Clickable : MonoBehaviour, IPointerClickHandler
 
     private void OnMouseEnter()
     {
-        GameManager.instance.SetAction(clickableName);
+        GameManager.instance.SetActionText(clickableName);
     }
 
     private void OnMouseExit()
     {
-        GameManager.instance.SetAction(GameManager.NONE_INTERACTABLE);
+        GameManager.instance.SetActionText(GameManager.NONE_INTERACTABLE);
     }
 
     private void OnMouseDown()
