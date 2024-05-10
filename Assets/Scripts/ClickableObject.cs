@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-public class Clickable : MonoBehaviour
+public class Clickable : MonoBehaviour, IPointerClickHandler
 {
     public string clickableName;
     public UnityEvent eventWhenClicked;
@@ -34,4 +35,10 @@ public class Clickable : MonoBehaviour
         if (debug) Debug.Log(gameObject.name + " got clicked!");
         eventWhenClicked.Invoke();
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+	{
+		if (debug) Debug.Log(gameObject.name + " got clicked!");
+		eventWhenClicked.Invoke();
+	}
 }
