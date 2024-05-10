@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text actionText;
     [SerializeField] TextMeshProUGUI timerText;
 	[SerializeField] TextMeshProUGUI scoreText;
+	[SerializeField] TextMeshProUGUI gameOverScoreText;
 
     [Header("Scene References")]
     [SerializeField] GameObject gameoverPanel;
@@ -58,10 +59,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(this.gameObject);
-
         Time.timeScale = 1f;
+		if (instance == null) instance = this;
+        else Destroy(this.gameObject);
     }
 
     // Start is called before the first frame update
@@ -169,9 +169,14 @@ public class GameManager : MonoBehaviour
         gameoverPanel.SetActive(true);
 		if (caught) caughtText.SetActive(true);
         else dinerText.SetActive(true);
-        string spentMoney = "1230"; // TODO : Get actual score
-        scoreText.text = scoreText.text.Replace("*score*", spentMoney);
+        string spentMoney = HoldButton.spentMoney.ToString();
+        gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", spentMoney);
 	}
+
+    public void UpdateScore(float spent)
+    {
+        scoreText.text = $"{spent}$";
+    }
 
 	public static void ReloadScene()
 	{
