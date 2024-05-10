@@ -42,7 +42,13 @@ public class GameManager : MonoBehaviour
 
 	[Header("UI")]
     public TMP_Text actionText;
-    public TMP_Text timerText;
+    [SerializeField] TextMeshProUGUI timerText;
+	[SerializeField] TextMeshProUGUI scoreText;
+
+    [Header("Scene References")]
+    [SerializeField] GameObject gameoverPanel;
+    [SerializeField] GameObject caughtText;
+    [SerializeField] GameObject dinerText;
     
     [Header("Timer Settings")]
 	[SerializeField] float timeLeft;
@@ -50,11 +56,12 @@ public class GameManager : MonoBehaviour
 	[SerializeField] bool alertStarted;
 	[SerializeField] AudioClip timeAlert;
 
-
     private void Awake()
     {
         if (instance == null) instance = this;
         else Destroy(this.gameObject);
+
+        Time.timeScale = 1f;
     }
 
     // Start is called before the first frame update
@@ -80,7 +87,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			//TODO : GameOver();
+			GameOver();
 		}
 	}
 
@@ -154,5 +161,20 @@ public class GameManager : MonoBehaviour
 		float minutes = Mathf.FloorToInt(time / 60f);
 		float seconds = Mathf.FloorToInt(time % 60f);
 		timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+	}
+
+    public void GameOver(bool caught = false)
+    {
+        Time.timeScale = 0f;
+        gameoverPanel.SetActive(true);
+		if (caught) caughtText.SetActive(true);
+        else dinerText.SetActive(true);
+        string spentMoney = "1230"; // TODO : Get actual score
+        scoreText.text = scoreText.text.Replace("*score*", spentMoney);
+	}
+
+	public static void ReloadScene()
+	{
+		SceneManager.LoadScene(0, LoadSceneMode.Single);
 	}
 }
