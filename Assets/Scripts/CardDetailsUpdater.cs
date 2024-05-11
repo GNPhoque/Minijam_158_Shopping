@@ -31,7 +31,13 @@ public class CardDetailsUpdater : MonoBehaviour
 
 	private void Start()
 	{
+		Invoke("StartUsing2FA", codesChangeTime);
 		InvokeRepeating("UpdateAll", 0f, codesChangeTime);
+	}
+
+	void StartUsing2FA()
+	{
+		GameManager.instance.use2FA = true;
 	}
 
 	private void UpdateAll()
@@ -46,6 +52,7 @@ public class CardDetailsUpdater : MonoBehaviour
 
 	public void UpdateNumbers()
 	{
+		numbersOk = false;
 		string newNumbers = "";
 		for (int i = 0; i < 4; i++)
 		{
@@ -64,6 +71,7 @@ public class CardDetailsUpdater : MonoBehaviour
 
 	public void Update2FA()
 	{
+		codeOk = false;
 		code2FA = "";
 		for (int i = 0; i < 4; i++)
 		{
