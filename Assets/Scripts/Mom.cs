@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mom : MonoBehaviour
 {
-    [SerializeField] private GameObject momCouchBG;
+    [SerializeField] private AnimatedObject momCouchAnim;
     public bool momActive = false;
 
     // Start is called before the first frame update
@@ -22,18 +22,19 @@ public class Mom : MonoBehaviour
     public void EnableMomAtCouch()
     {
         momActive = true;
-        momCouchBG.SetActive(true);
+        momCouchAnim.gameObject.SetActive(true);
+        momCouchAnim.PlayAnimation("StartPeeking");
     }
 
     public void DisableMomAtCouch()
     {
         momActive = false;
-        momCouchBG.SetActive(false);
+        StartCoroutine(WaitForMomEndPeeking(2f));
     }
 
-    public void ToggleMomAtCouch()
+    IEnumerator WaitForMomEndPeeking(float delay)
     {
-        momActive = !momActive;
-        momCouchBG.SetActive(momActive);
+        yield return new WaitForSeconds(delay);
+        momCouchAnim.PlayAnimation("GoAway");
     }
 }
