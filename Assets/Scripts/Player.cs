@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     public bool IsSittingOnCouch()
     {
         // If the player is sitting on the couch
-        return activity == PlayerActivity.SittingOnCouch;
+        return state == PlayerState.Couch;
     }
 
     public bool IsNotAtCouch()
