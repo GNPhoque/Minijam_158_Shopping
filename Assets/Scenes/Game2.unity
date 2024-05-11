@@ -1272,6 +1272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffea7647f6350da49bd7c6e09d77c279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MAIN_MENU: 0
   holdDuration: 2
   nextCost: 120
   fill: {fileID: 1499848367}
@@ -3145,6 +3146,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2468884397659625954, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
+      propertyPath: eventWhenClicked.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468884397659625954, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
+      propertyPath: eventWhenClicked.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 627691199}
+    - target: {fileID: 2468884397659625954, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
+      propertyPath: eventWhenClicked.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActivity
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468884397659625954, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
+      propertyPath: eventWhenClicked.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_IntArgument
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2872630895268091735, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
       propertyPath: m_text
       value: Invalid
@@ -3332,6 +3349,18 @@ PrefabInstance:
     - target: {fileID: 7171552966034145779, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 480
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200841415396203773, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
+      propertyPath: eventWhenClicked.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 627691199}
+    - target: {fileID: 7200841415396203773, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
+      propertyPath: eventWhenClicked.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActivity
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200841415396203773, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
+      propertyPath: eventWhenClicked.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_IntArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7611800802527617767, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
       propertyPath: m_Name
@@ -8448,7 +8477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3753617482903349490, guid: 4f18830a04230da44b28a170f7b1e953, type: 3}
       propertyPath: eventWhenClicked.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3753617482903349490, guid: 4f18830a04230da44b28a170f7b1e953, type: 3}
       propertyPath: handleSelectedAnimationsOnAnimatedObjects.Array.data[0]

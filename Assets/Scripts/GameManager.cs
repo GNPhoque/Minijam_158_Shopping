@@ -93,8 +93,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool eligibleToStartTimer = false;
 
     // Debug Values
-    const bool DEBUG_MOM_COUCH_THINKING = false;
-    const bool DEBUG_MOM_THINKING = false;
+    const bool DEBUG_MOM_COUCH_THINKING = true;
+    const bool DEBUG_MOM_THINKING = true;
     const bool DEBUG_FLICKING = false;
 
     private void Awake()
@@ -158,7 +158,6 @@ public class GameManager : MonoBehaviour
     public void MomAI(bool bypassWaiting = false)
     {
         if (DEBUG_MOM_THINKING) print("mom ai");
-        if (!eligibleToStartTimer) return;
 
         momAttacking = true;
         StartCoroutine(MomTick(bypassWaiting: bypassWaiting));
@@ -174,21 +173,28 @@ public class GameManager : MonoBehaviour
     {
         if (!bypassWaiting)
         {
+            if (DEBUG_MOM_THINKING) print("waiting for movement opportunity");
             int spawnIn = GetRandomMomDelay();
             yield return new WaitForSeconds(spawnIn);
         }
+        else if (DEBUG_MOM_THINKING) print("bypassed waiting");
 
-        if (DEBUG_MOM_THINKING) print("where to spawn");
+        if (DEBUG_MOM_THINKING) print("MOMAI: Tick");
 
         // If player is at couch, then spawn mom at couch
         if (player.IsSittingOnCouch()) StartCoroutine(MomAtCouch());
-
-        // ...
+        else
+        {
+            // Wait a few seconds for the player to get back to the couch area
+            if (DEBUG_MOM_THINKING) print("MOMAI: Stalled");
+            yield return new WaitForSeconds(1.5f);
+            StartCoroutine(MomTick(bypassWaiting));
+        }
     }
 
     IEnumerator MomAtCouch()
     {
-        momObject.EnableMomAtCouch();
+        momObject?.EnableMomAtCouch();
 
         string momAction = "NONE";
         float delayBeforeLeave = 0.5f;
@@ -203,7 +209,7 @@ public class GameManager : MonoBehaviour
             {
                 DecreaseChancesAndCheckIfGameOver();
 
-                if (DEBUG_MOM_COUCH_THINKING) print("player is shopping");
+                if (DEBUG_MOM_COUCH_THINKING) print("MOMAI: Caught player shopping");
 
                 // .. mom jumpscare, or reaction time
                 // for now she'll just leave
@@ -216,19 +222,26 @@ public class GameManager : MonoBehaviour
                 momAction = "LEAVE";
             }
         }
-        else
+        else if (player.activity == PlayerActivity.SittingOnCouch)
         {
             // You're just sitting on the couch doing nothing
             momAction = "LEAVE";
         }
+        else if (player.state != PlayerState.Couch)
+        {
+            // the player moved to look at credit card, or steal phone WHILE mom was looking, it's game over
+            if (DEBUG_MOM_COUCH_THINKING) print("MOMAI: You got caught in the act of naughty behaviour, game over");
+            // ..mom jumpscare, and show game over screen.
+            GameOver(caught: true);
+            yield return null;
+        }
         
-        
-        if (DEBUG_MOM_COUCH_THINKING) print("mom action: " + momAction);
+        if (DEBUG_MOM_COUCH_THINKING) print("MOMAI: Action: " + momAction);
         
         if (delayBeforeLeave == 0f) delayBeforeLeave = GetRandomMomDelay();
         yield return new WaitForSeconds(delayBeforeLeave);
 
-        if (momAction == "LEAVE") momObject.DisableMomAtCouch();
+        if (momAction == "LEAVE") momObject?.DisableMomAtCouch();
         else if (momAction == "NONE") Debug.LogWarning("Mom didn't get an action?");
 
         yield return new WaitForSeconds(3f); // small delay to finish animations
@@ -370,6 +383,7 @@ public class GameManager : MonoBehaviour
                 couchUI.SetActive(true);
                 couchClickables.SetActive(true);
                 SetActivity(2);
+                player.state = PlayerState.Couch;
                 break;
             case Areas.Table:
                 tableUI.SetActive(true);
