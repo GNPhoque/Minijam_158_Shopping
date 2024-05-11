@@ -103,6 +103,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Start Game!");
 
         StartCoroutine(MomTick(bypassWaiting: true));
+
+        AudioManager.instance.PlayLoopPreIntro();
+        AudioManager.instance.ForcePlayMusicLoop();
     }
 
     private void Update()
@@ -238,6 +241,8 @@ public class GameManager : MonoBehaviour
         Item itemToBuy = buyableItems.GetRandomItem();
 		spentMoney += itemToBuy.cost;
         UpdateScore(spentMoney);
+        TriggerCardFirstUsed();
+        if(spentMoney>10000f) Trigger10KReached();
 
         string nameAndCost = itemToBuy.name + " $" + itemToBuy.cost;
 
@@ -272,6 +277,24 @@ public class GameManager : MonoBehaviour
 
             player.activity = PlayerActivity.SittingOnCouch;
         }
+    }
+
+    public void TriggerCardFirstShown()
+    {
+        if (!AudioManager.instance.cardShown) AudioManager.instance.PlayLoopIntro();
+			AudioManager.instance.cardShown = true;
+    }
+
+    public void TriggerCardFirstUsed()
+    {
+        if (!AudioManager.instance.cardused) AudioManager.instance.PlayLoopPart1WOSnare();
+			AudioManager.instance.cardused = true;
+    }
+
+    public void Trigger10KReached()
+    {
+        if (!AudioManager.instance.TenKReached) AudioManager.instance.PlayLoopPart1WSnare();
+			AudioManager.instance.TenKReached = true;
     }
 
     #region Area Functions
