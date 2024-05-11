@@ -24,8 +24,10 @@ public class AudioManager : MonoBehaviour
 	public static AudioManager instance;
 
 	public bool cardShown;
-	public bool cardused;
-	public bool TenKReached;
+	public bool firstBuy;
+	public bool oneKReached;
+	public bool twoKReached;
+	public bool fiveKReached;
 
 	float looptime = 0f;
 	[SerializeField] MusicLoopTracks nextMuteChangeMethod = MusicLoopTracks.None;
@@ -56,8 +58,10 @@ public class AudioManager : MonoBehaviour
 	public void ResetTriggers()
 	{
 		cardShown = false;
-		cardused = false;
-		TenKReached = false;
+		firstBuy = false;
+		oneKReached = false;
+		twoKReached = false;
+		fiveKReached = false;
 	}
 
 	public void PlayMusicLoop(MusicLoopTracks tracksToMute)
@@ -65,9 +69,16 @@ public class AudioManager : MonoBehaviour
 		print($"Changing Play Loop to {nextMuteChangeMethod}");
 		for (int i = 0; i < musicLoops.Length; i++)
 		{
-			musicLoops[i].mute = tracksToMute != (MusicLoopTracks)i;
+			musicLoops[i].mute = tracksToMute != (MusicLoopTracks)i + 1; //mute all tracks except selected one
 		}
-		nextMuteChangeMethod = MusicLoopTracks.None;
+
+		if (nextMuteChangeMethod == MusicLoopTracks.Ending) nextMuteChangeMethod = MusicLoopTracks.Outro;
+		else if (nextMuteChangeMethod == MusicLoopTracks.Outro)
+		{
+			musicLoops.Last().loop = false;
+			nextMuteChangeMethod = MusicLoopTracks.None;
+		}
+		else nextMuteChangeMethod = MusicLoopTracks.None;
 	}
 
 	public void ForcePlayMusicLoop()

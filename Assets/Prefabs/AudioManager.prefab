@@ -57,8 +57,11 @@ MonoBehaviour:
   - {fileID: 3118246319967273454}
   sfx: {fileID: 7111558323242300256}
   cardShown: 0
-  cardused: 0
-  TenKReached: 0
+  firstBuy: 0
+  oneKReached: 0
+  twoKReached: 0
+  fiveKReached: 0
+  nextMuteChangeMethod: 0
 --- !u!1 &2354502791689821912
 GameObject:
   m_ObjectHideFlags: 0

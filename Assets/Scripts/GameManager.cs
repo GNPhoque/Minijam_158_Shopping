@@ -242,7 +242,9 @@ public class GameManager : MonoBehaviour
 		spentMoney += itemToBuy.cost;
         UpdateScore(spentMoney);
         TriggerCardFirstUsed();
-        if(spentMoney>10000f) Trigger10KReached();
+        if(spentMoney>=5000f) Trigger5KReached();
+        else if(spentMoney>=2000f) Trigger2KReached();
+        else if(spentMoney>=1000f) Trigger1KReached();
 
         string nameAndCost = itemToBuy.name + " $" + itemToBuy.cost;
 
@@ -281,24 +283,36 @@ public class GameManager : MonoBehaviour
 
     public void TriggerCardFirstShown()
     {
-        if (!AudioManager.instance.cardShown) AudioManager.instance.PlayLoopIntro();
+        if (!AudioManager.instance.cardShown) AudioManager.instance.PlayLoopPreIntroWithBass();
 			AudioManager.instance.cardShown = true;
     }
 
     public void TriggerCardFirstUsed()
     {
-        if (!AudioManager.instance.cardused) AudioManager.instance.PlayLoopPart1WOSnare();
-			AudioManager.instance.cardused = true;
-    }
+        if (!AudioManager.instance.firstBuy) AudioManager.instance.PlayLoopIntro();
+			AudioManager.instance.firstBuy = true;
+	}
 
-    public void Trigger10KReached()
-    {
-        if (!AudioManager.instance.TenKReached) AudioManager.instance.PlayLoopPart1WSnare();
-			AudioManager.instance.TenKReached = true;
-    }
+	public void Trigger1KReached()
+	{
+		if (!AudioManager.instance.oneKReached) AudioManager.instance.PlayLoopPart1WOSnare();
+		AudioManager.instance.oneKReached = true;
+	}
 
-    #region Area Functions
-    public void DisableAllAreas()
+	public void Trigger2KReached()
+	{
+		if (!AudioManager.instance.twoKReached) AudioManager.instance.PlayLoopPart1WSnare();
+		AudioManager.instance.oneKReached = true;
+	}
+
+	public void Trigger5KReached()
+	{
+		if (!AudioManager.instance.fiveKReached) AudioManager.instance.PlayLoopPart2();
+		AudioManager.instance.oneKReached = true;
+	}
+
+	#region Area Functions
+	public void DisableAllAreas()
     {
         couchClickables.SetActive(false);
         couchUI.SetActive(false);
