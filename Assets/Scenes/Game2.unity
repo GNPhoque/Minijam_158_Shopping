@@ -2346,8 +2346,8 @@ MonoBehaviour:
   spentMoney: 0
   use2FA: 0
   momObject: {fileID: 139885890}
-  startMomDelay: 3
-  endMomDelay: 9
+  startMomDelay: 10
+  endMomDelay: 30
   momAggresion: 2
   actionText: {fileID: 2050103320}
   timerText: {fileID: 1156195127}
@@ -2366,10 +2366,11 @@ MonoBehaviour:
   caughtText: {fileID: 1943504420}
   dinerText: {fileID: 631682964}
   input2FA: {fileID: 829031576}
-  timeLeft: 300
+  timeLeft: 150
   alertStartTime: 30
   alertStarted: 0
   timeAlert: {fileID: 0}
+  eligibleToStartTimer: 0
 --- !u!114 &627691200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2391,7 +2392,7 @@ MonoBehaviour:
   _2FAInput: {fileID: 829031577}
   codeCorrect: {fileID: 1929828409}
   codeIncorrect: {fileID: 21618090}
-  codesChangeTime: 4
+  codesChangeTime: 45
   rotateCardNumber: 0
   rotate2FA: 1
   numbers: 
@@ -3515,7 +3516,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1106101933}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 594539969625914939, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3535,15 +3536,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 594539969625914939, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 594539969625914939, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 594539969625914939, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 594539969625914939, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3566,11 +3567,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
---- !u!4 &839166672 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 594539969625914939, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
-  m_PrefabInstance: {fileID: 839166671}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &865426044
 GameObject:
   m_ObjectHideFlags: 0
@@ -4621,7 +4617,6 @@ Transform:
   - {fileID: 509357884}
   - {fileID: 139885889}
   - {fileID: 621827709}
-  - {fileID: 839166672}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1109191388
@@ -9377,3 +9372,4 @@ SceneRoots:
   - {fileID: 1712295545}
   - {fileID: 2108897135}
   - {fileID: 1022510436}
+  - {fileID: 839166671}

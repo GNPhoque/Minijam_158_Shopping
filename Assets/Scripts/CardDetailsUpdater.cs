@@ -23,7 +23,6 @@ public class CardDetailsUpdater : MonoBehaviour
 	[Header("Rotation Settings")]
 	[SerializeField] bool rotateCardNumber = false;
 	[SerializeField] bool rotate2FA = true;
-	bool rotatedCardNumber = false;
 	bool rotated2FA = false;
 
 	[Header("Debug")]
@@ -42,12 +41,17 @@ public class CardDetailsUpdater : MonoBehaviour
 	{
 		get 
 		{
-			print($"numberOk : {numbersOk}, use2FA : {GameManager.instance.use2FA}, codeOk : {codeOk}");
+			//print($"numberOk : {numbersOk}, use2FA : {GameManager.instance.use2FA}, codeOk : {codeOk}");
 			return numbersOk && (!GameManager.instance.use2FA || (GameManager.instance.use2FA && codeOk)); 
 		}
 	}
 
-	private void Start()
+    private void Start()
+    {
+        UpdateNumbers();
+    }
+
+    public void Start2FA()
 	{
 		Invoke("StartUsing2FA", codesChangeTime);
 		InvokeRepeating("UpdateAll", 0f, codesChangeTime);
@@ -60,12 +64,7 @@ public class CardDetailsUpdater : MonoBehaviour
 
 	private void UpdateAll()
 	{
-		if (!rotatedCardNumber)
-		{
-            UpdateNumbers();
-			rotatedCardNumber = true;
-        }
-		else if (rotatedCardNumber && rotateCardNumber) UpdateNumbers();
+		if (rotateCardNumber) UpdateNumbers();
 
 		if (GameManager.instance.use2FA)
 		{

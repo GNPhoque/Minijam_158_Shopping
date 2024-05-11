@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,8 +7,8 @@ public enum MusicLoopTracks
 	PreIntro,
 	PreIntroWBacking,
 	Intro,
-	Part1WSnare,
 	Part1WOSnare,
+	Part1WSnare,
 	Part2,
 	Ending,
 	Outro
@@ -20,34 +18,33 @@ public class AudioManager : MonoBehaviour
 {
 	[SerializeField] AudioSource[] musicLoops;
 	[SerializeField] AudioSource sfx;
+	int currentPlaying = 0;
 
 	public static AudioManager instance;
 
 	public bool cardShown;
 	public bool firstBuy;
-	public bool oneKReached;
-	public bool twoKReached;
-	public bool fiveKReached;
+	public bool firstCriteriaReached;
+	public bool secondCriteriaReached;
+	public bool thirdCriteriaReached;
+
+	public bool endingPlayed = false;
 
 	float looptime = 0f;
-	[SerializeField] MusicLoopTracks nextMuteChangeMethod = MusicLoopTracks.None;
+	public MusicLoopTracks nextMuteChangeMethod = MusicLoopTracks.None;
 
 	private void Awake()
 	{
-		if (instance)
-		{
-			Destroy(gameObject);
-			return;
-		}
+		if (instance) Destroy(gameObject);
 		instance = this;
-		DontDestroyOnLoad(gameObject);
+		//DontDestroyOnLoad(gameObject);
 	}
 
-	private void Update()
+    private void Update()
 	{
 		if (nextMuteChangeMethod == MusicLoopTracks.None) return;
 
-		float newLoopTime = musicLoops[0].time;
+		float newLoopTime = musicLoops[currentPlaying].time;
 		if(newLoopTime < looptime) //looped this frame
 		{
 			PlayMusicLoop(nextMuteChangeMethod);
@@ -59,9 +56,9 @@ public class AudioManager : MonoBehaviour
 	{
 		cardShown = false;
 		firstBuy = false;
-		oneKReached = false;
-		twoKReached = false;
-		fiveKReached = false;
+		firstCriteriaReached = false;
+		secondCriteriaReached = false;
+		thirdCriteriaReached = false;
 	}
 
 	public void PlayMusicLoop(MusicLoopTracks tracksToMute)
@@ -72,13 +69,22 @@ public class AudioManager : MonoBehaviour
 			musicLoops[i].mute = tracksToMute != (MusicLoopTracks)i + 1; //mute all tracks except selected one
 		}
 
-		if (nextMuteChangeMethod == MusicLoopTracks.Ending) nextMuteChangeMethod = MusicLoopTracks.Outro;
+		MusicLoopTracks wantToSwitchTo = MusicLoopTracks.None;
+
+		if (nextMuteChangeMethod == MusicLoopTracks.Intro) wantToSwitchTo = MusicLoopTracks.Part1WOSnare;
+
+		else if (nextMuteChangeMethod == MusicLoopTracks.Ending) wantToSwitchTo = MusicLoopTracks.Outro;
+
 		else if (nextMuteChangeMethod == MusicLoopTracks.Outro)
 		{
-			musicLoops.Last().loop = false;
+			AudioSource lastSource = musicLoops[(int)MusicLoopTracks.Outro - 1];
+            lastSource.loop = false;
+			lastSource.Play();
 			nextMuteChangeMethod = MusicLoopTracks.None;
 		}
-		else nextMuteChangeMethod = MusicLoopTracks.None;
+
+		if (wantToSwitchTo == MusicLoopTracks.None) nextMuteChangeMethod = MusicLoopTracks.None;
+		else nextMuteChangeMethod = wantToSwitchTo;
 	}
 
 	public void ForcePlayMusicLoop()
@@ -124,6 +130,7 @@ public class AudioManager : MonoBehaviour
 	public void PlayLoopEnding()
 	{
 		nextMuteChangeMethod = MusicLoopTracks.Ending;
+		endingPlayed = true;
 	}
 
 	public void PlayLoopOutro()

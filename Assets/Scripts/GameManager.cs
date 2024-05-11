@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#pragma warning disable CS0162
+
 // Enums
 public enum PlayerState
 {
@@ -41,6 +43,12 @@ public class GameManager : MonoBehaviour
     public BuyableItemsHolder buyableItems;
 	public float spentMoney = 0f;
     public bool use2FA = false;
+    bool firstItemBought = false;
+
+    [Header("Criterias")]
+    public const float FIRST_SPENT_CRITERIA = 10_000;
+    public const float SECOND_SPENT_CRITERIA = 25_000;
+    public const float THIRD_SPENT_CRITERIA = 75_000;
 
 	// Mom Settings
 	[Header("Mom Settings")]
@@ -78,10 +86,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject input2FA;
 
 	[Header("Timer Settings")]
-	[SerializeField] float timeLeft;
+	public float timeLeft;
 	[SerializeField] float alertStartTime;
 	[SerializeField] bool alertStarted;
 	[SerializeField] AudioClip timeAlert;
+    [SerializeField] bool eligibleToStartTimer = false;
+
+    // Debug Values
+    const bool DEBUG_MOM_COUCH_THINKING = false;
+    const bool DEBUG_MOM_THINKING = false;
+    const bool DEBUG_FLICKING = false;
 
     private void Awake()
     {
@@ -110,19 +124,25 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (timeLeft > 0)
+        if (eligibleToStartTimer)
         {
-            timeLeft -= Time.deltaTime;
-            DisplayTime(timeLeft);
-            if (timeLeft < alertStartTime && !alertStarted)
+            if (timeLeft > 0)
             {
-                alertStarted = true;
-                //TODO : Find AudioSource to play timeAlert sound;
+                timeLeft -= Time.deltaTime;
+                DisplayTime(timeLeft);
+                if (timeLeft < alertStartTime && !alertStarted)
+                {
+                    alertStarted = true;
+                    //TODO : Find AudioSource to play timeAlert sound;
+                }
+
+                if (timeLeft < 20 && !AudioManager.instance.endingPlayed) 
+                    AudioManager.instance.PlayLoopEnding();
             }
-        }
-        else
-        {
-            GameOver();
+            else
+            {
+                GameOver();
+            }
         }
 
         if (!momAttacking) MomAI(false);
@@ -137,7 +157,9 @@ public class GameManager : MonoBehaviour
 
     public void MomAI(bool bypassWaiting = false)
     {
-        print("mom ai");
+        if (DEBUG_MOM_THINKING) print("mom ai");
+        if (!eligibleToStartTimer) return;
+
         momAttacking = true;
         StartCoroutine(MomTick(bypassWaiting: bypassWaiting));
     }
@@ -156,7 +178,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(spawnIn);
         }
 
-        print("where to spawn");
+        if (DEBUG_MOM_THINKING) print("where to spawn");
 
         // If player is at couch, then spawn mom at couch
         if (player.IsSittingOnCouch()) StartCoroutine(MomAtCouch());
@@ -180,7 +202,9 @@ public class GameManager : MonoBehaviour
             if (player.IsShopping()) // If the player is on the shopping tab
             {
                 DecreaseChancesAndCheckIfGameOver();
-                print("player is shopping");
+
+                if (DEBUG_MOM_COUCH_THINKING) print("player is shopping");
+
                 // .. mom jumpscare, or reaction time
                 // for now she'll just leave
                 momAction = "LEAVE";
@@ -197,7 +221,10 @@ public class GameManager : MonoBehaviour
             // You're just sitting on the couch doing nothing
             momAction = "LEAVE";
         }
-        print("mom action: " + momAction);
+        
+        
+        if (DEBUG_MOM_COUCH_THINKING) print("mom action: " + momAction);
+        
         if (delayBeforeLeave == 0f) delayBeforeLeave = GetRandomMomDelay();
         yield return new WaitForSeconds(delayBeforeLeave);
 
@@ -238,13 +265,20 @@ public class GameManager : MonoBehaviour
 
     public string BuyItem()
     {
+        if (!firstItemBought)
+        {
+            firstItemBought = true;
+            eligibleToStartTimer = true;
+            GetComponent<CardDetailsUpdater>().Start2FA();
+        }
+
         Item itemToBuy = buyableItems.GetRandomItem();
 		spentMoney += itemToBuy.cost;
         UpdateScore(spentMoney);
         TriggerCardFirstUsed();
-        if(spentMoney>=5000f) Trigger5KReached();
-        else if(spentMoney>=2000f) Trigger2KReached();
-        else if(spentMoney>=1000f) Trigger1KReached();
+        if (spentMoney >= THIRD_SPENT_CRITERIA) TriggerThirdCriteriaReached();
+        else if (spentMoney >= SECOND_SPENT_CRITERIA) TriggerSecondCriteriaReached();
+        else if (spentMoney >= FIRST_SPENT_CRITERIA) TriggerFirstCriteriaReached();
 
         string nameAndCost = itemToBuy.name + " $" + itemToBuy.cost;
 
@@ -268,7 +302,7 @@ public class GameManager : MonoBehaviour
 
     public void FlickBack()
     {
-        print("Flicked Back");
+        if (DEBUG_FLICKING) print("Flicked Back");
 
         if (player.state != PlayerState.Couch) InitializeArea(Areas.Couch);
 
@@ -293,22 +327,22 @@ public class GameManager : MonoBehaviour
 			AudioManager.instance.firstBuy = true;
 	}
 
-	public void Trigger1KReached()
+	public void TriggerFirstCriteriaReached()
 	{
-		if (!AudioManager.instance.oneKReached) AudioManager.instance.PlayLoopPart1WOSnare();
-		AudioManager.instance.oneKReached = true;
+		if (!AudioManager.instance.firstCriteriaReached) AudioManager.instance.PlayLoopPart1WOSnare();
+		AudioManager.instance.firstCriteriaReached = true;
 	}
 
-	public void Trigger2KReached()
+	public void TriggerSecondCriteriaReached()
 	{
-		if (!AudioManager.instance.twoKReached) AudioManager.instance.PlayLoopPart1WSnare();
-		AudioManager.instance.oneKReached = true;
+		if (!AudioManager.instance.secondCriteriaReached) AudioManager.instance.PlayLoopPart1WSnare();
+		AudioManager.instance.secondCriteriaReached = true;
 	}
 
-	public void Trigger5KReached()
+	public void TriggerThirdCriteriaReached()
 	{
-		if (!AudioManager.instance.fiveKReached) AudioManager.instance.PlayLoopPart2();
-		AudioManager.instance.oneKReached = true;
+		if (!AudioManager.instance.thirdCriteriaReached) AudioManager.instance.PlayLoopPart2();
+		AudioManager.instance.thirdCriteriaReached = true;
 	}
 
 	#region Area Functions
