@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
+	[SerializeField] bool MAIN_MENU;
+
 	[SerializeField] float holdDuration;
 	[SerializeField] float nextCost;
 	[SerializeField] Image fill;
@@ -29,6 +31,8 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
 	private void Start()
 	{
+		if (MAIN_MENU) return;
+
 		GameManager.instance.spentMoney = 0f;
 		popupText.color = new Color(popupText.color.r, popupText.color.g, popupText.color.b, 0);
 	}
@@ -51,7 +55,7 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
 		if (isHeldDown)
 		{
-			if (!cardDetailsUpdater.CanBuy)
+			if (!MAIN_MENU && !cardDetailsUpdater.CanBuy)
 			{
 				isHeldDown = false;
 				currentHoldDuration = 0f;
@@ -66,7 +70,7 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		if (!cardDetailsUpdater.CanBuy) return;
+		if (!MAIN_MENU && !cardDetailsUpdater.CanBuy) return;
 
 		isHeldDown = true;
 		currentHoldDuration = 0f;
@@ -89,7 +93,14 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 		fill.fillAmount = 0;
 		animatingPopup = true;
 		currentPopupAnimationTime = 0f;
-		popupText.text = GameManager.instance.BuyItem();
 		currentHoldDuration -= holdDuration;
+		if (MAIN_MENU)
+		{
+			popupText.text = "B-bucks $19.99";
+		}
+		else
+		{
+			popupText.text = GameManager.instance.BuyItem();
+		}
 	}
 }
