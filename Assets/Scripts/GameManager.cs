@@ -23,7 +23,7 @@ public enum PlayerActivity
 public enum Areas
 {
     Couch,
-    Table, 
+    Table,
     Kitchen
 }
 
@@ -46,14 +46,16 @@ public class GameManager : MonoBehaviour
     public Mom momObject;
     public int startMomDelay;
     public int endMomDelay;
-	// How much time the player has to react to mom
-	public float momAggresion = 2f;
+    // How much time the player has to react to mom
+    public float momAggresion = 2f;
 
-	[Header("UI")]
+    bool momAttacking = false;
+
+    [Header("UI")]
     public TMP_Text actionText;
     [SerializeField] TextMeshProUGUI timerText;
-	[SerializeField] TextMeshProUGUI scoreText;
-	[SerializeField] TextMeshProUGUI gameOverScoreText;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI gameOverScoreText;
 
     [Header("Areas")]
     [SerializeField] GameObject couchUI;
@@ -71,17 +73,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameoverPanel;
     [SerializeField] GameObject caughtText;
     [SerializeField] GameObject dinerText;
-    
+
     [Header("Timer Settings")]
-	[SerializeField] float timeLeft;
-	[SerializeField] float alertStartTime;
-	[SerializeField] bool alertStarted;
-	[SerializeField] AudioClip timeAlert;
+    [SerializeField] float timeLeft;
+    [SerializeField] float alertStartTime;
+    [SerializeField] bool alertStarted;
+    [SerializeField] AudioClip timeAlert;
 
     private void Awake()
     {
         Time.timeScale = 1f;
-		if (instance == null) instance = this;
+        if (instance == null) instance = this;
         else Destroy(this.gameObject);
     }
 
@@ -97,26 +99,28 @@ public class GameManager : MonoBehaviour
         player.activity = PlayerActivity.SittingOnCouch;
         Debug.Log("Start Game!");
 
-        StartCoroutine(MomTick());
+        StartCoroutine(MomTick(bypassWaiting: true));
     }
 
     private void Update()
     {
-		if (timeLeft > 0)
-		{
-			timeLeft -= Time.deltaTime;
-			DisplayTime(timeLeft);
-			if (timeLeft < alertStartTime && !alertStarted)
-			{
-				alertStarted = true;
+        if (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            DisplayTime(timeLeft);
+            if (timeLeft < alertStartTime && !alertStarted)
+            {
+                alertStarted = true;
                 //TODO : Find AudioSource to play timeAlert sound;
-			}
-		}
-		else
-		{
-			GameOver();
-		}
-	}
+            }
+        }
+        else
+        {
+            GameOver();
+        }
+
+        if (!momAttacking) MomAI(false);
+    }
 
     public void SetActionText(string actionName)
     {
@@ -125,16 +129,28 @@ public class GameManager : MonoBehaviour
 
     #region Mom Functions
 
+    public void MomAI(bool bypassWaiting = false)
+    {
+        print("mom ai");
+        momAttacking = true;
+        StartCoroutine(MomTick(bypassWaiting: bypassWaiting));
+    }
+
     int GetRandomMomDelay()
     {
         return UnityEngine.Random.Range(startMomDelay, endMomDelay);
     }
 
     // Mom Functions
-    IEnumerator MomTick()
+    IEnumerator MomTick(bool bypassWaiting)
     {
-        int spawnIn = GetRandomMomDelay();
-        yield return new WaitForSeconds(spawnIn);
+        if (!bypassWaiting)
+        {
+            int spawnIn = GetRandomMomDelay();
+            yield return new WaitForSeconds(spawnIn);
+        }
+
+        print("where to spawn");
 
         // If player is at couch, then spawn mom at couch
         if (player.IsSittingOnCouch()) StartCoroutine(MomAtCouch());
@@ -147,6 +163,7 @@ public class GameManager : MonoBehaviour
         momObject.EnableMomAtCouch();
 
         string momAction = "NONE";
+        float delayBeforeLeave = 0.5f;
 
         // Give Player time to react
         yield return new WaitForSeconds(momAggresion);
@@ -156,44 +173,55 @@ public class GameManager : MonoBehaviour
         {
             if (player.IsShopping()) // If the player is on the shopping tab
             {
-                playerChances -= 1;
-
+                DecreaseChancesAndCheckIfGameOver();
+                print("player is shopping");
                 // .. mom jumpscare, or reaction time
+                // for now she'll just leave
+                momAction = "LEAVE";
+                delayBeforeLeave = 0.5f;
             }
             else // Player is on the gaming tab
             {
                 // .. mom might look at what you're doing, then go away
                 momAction = "LEAVE";
             }
-        } else
+        }
+        else
         {
             // You're just sitting on the couch doing nothing
             momAction = "LEAVE";
         }
-
-        yield return new WaitForSeconds(GetRandomMomDelay());
+        print("mom action: " + momAction);
+        if (delayBeforeLeave == 0f) delayBeforeLeave = GetRandomMomDelay();
+        yield return new WaitForSeconds(delayBeforeLeave);
 
         if (momAction == "LEAVE") momObject.DisableMomAtCouch();
         else if (momAction == "NONE") Debug.LogWarning("Mom didn't get an action?");
+
+        yield return new WaitForSeconds(3f); // small delay to finish animations
+
+        momAttacking = false;
     }
 
     #endregion
 
-    public void CheckIfGameOver()
+    public void DecreaseChancesAndCheckIfGameOver()
     {
+        playerChances -= 1;
         if (playerChances > 0) return;
 
         Debug.Log("you lost");
-        SceneManager.LoadScene(0);
-	}
+        GameOver(caught: true);
+        //SceneManager.LoadScene(0);
+    }
 
-	void DisplayTime(float time)
-	{
-		time++;
-		float minutes = Mathf.FloorToInt(time / 60f);
-		float seconds = Mathf.FloorToInt(time % 60f);
-		timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-	}
+    void DisplayTime(float time)
+    {
+        time++;
+        float minutes = Mathf.FloorToInt(time / 60f);
+        float seconds = Mathf.FloorToInt(time % 60f);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
 
     public void UpdateScore(float spent = 0f)
     {
@@ -217,21 +245,23 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         gameoverPanel.SetActive(true);
-		if (caught) caughtText.SetActive(true);
+        if (caught) caughtText.SetActive(true);
         else dinerText.SetActive(true);
         gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", moneySpent.ToString());
-	}
+    }
 
     public void FlickBack()
     {
         print("Flicked Back");
 
         if (player.state != PlayerState.Couch) InitializeArea(Areas.Couch);
-        
+
         if (player.IsOnComputer())
         {
             computerUI.SetActive(false);
             couchClickables.SetActive(true);
+
+            player.activity = PlayerActivity.SittingOnCouch;
         }
     }
 
@@ -277,7 +307,7 @@ public class GameManager : MonoBehaviour
 
     public void InitializeArea(int area)
     {
-        Areas selectedArea = (Areas) area;
+        Areas selectedArea = (Areas)area;
         InitializeArea(selectedArea);
     }
 
@@ -299,7 +329,7 @@ public class GameManager : MonoBehaviour
         player.state = PlayerState.Table;
         player.activity = PlayerActivity.AtTable;
     }
-    
+
     public void InitializeKitchen()
     {
         player.state = PlayerState.Kitchen;
@@ -314,7 +344,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public static void ReloadScene()
-	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
-	}
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+    }
 }
