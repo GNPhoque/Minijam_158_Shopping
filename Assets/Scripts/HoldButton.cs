@@ -8,10 +8,10 @@ using UnityEngine.UI;
 
 public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
-	public static float spentMoney;
 	[SerializeField] float holdDuration;
 	[SerializeField] float nextCost;
 	[SerializeField] Image fill;
+	[SerializeField] CardDetailsUpdater cardDetailsUpdater;
 
 	[Header("Popup")]
 	[SerializeField] RectTransform popup;
@@ -29,19 +29,12 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
 	private void Start()
 	{
-		spentMoney = 0f;
+		GameManager.instance.spentMoney = 0f;
 		popupText.color = new Color(popupText.color.r, popupText.color.g, popupText.color.b, 0);
 	}
 
 	private void Update()
 	{
-		if (isHeldDown)
-		{
-			currentHoldDuration += Time.deltaTime;
-			fill.fillAmount = currentHoldDuration / holdDuration;
-			if (currentHoldDuration > holdDuration) HoldSuccess();
-		}
-
 		if (animatingPopup && currentPopupAnimationTime < popupAnimationTime)
 		{
 			// print(currentPopupAnimationTime);
@@ -55,10 +48,26 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 				popupText.color = new Color(popupText.color.r, popupText.color.g, popupText.color.b, 0);
 			}
 		}
+
+		if (isHeldDown)
+		{
+			if (!cardDetailsUpdater.CanBuy)
+			{
+				isHeldDown = false;
+				currentHoldDuration = 0f;
+				return;
+			}
+
+			currentHoldDuration += Time.deltaTime;
+			fill.fillAmount = currentHoldDuration / holdDuration;
+			if (currentHoldDuration > holdDuration) HoldSuccess();
+		}
 	}
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
+		if (!cardDetailsUpdater.CanBuy) return;
+
 		isHeldDown = true;
 		currentHoldDuration = 0f;
 	}

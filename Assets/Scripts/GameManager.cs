@@ -38,11 +38,12 @@ public class GameManager : MonoBehaviour
     [Header("Player Settings")]
     public Player player;
     public int playerChances = 3;
-    public float moneySpent = 0f;
     public BuyableItemsHolder buyableItems;
+	public float spentMoney = 0f;
+    public bool use2FA = false;
 
-    // Mom Settings
-    [Header("Mom Settings")]
+	// Mom Settings
+	[Header("Mom Settings")]
     public Mom momObject;
     public int startMomDelay;
     public int endMomDelay;
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject tableUI;
     [SerializeField] GameObject tableCardUI;
     [SerializeField] GameObject kitchenUI;
+    [SerializeField] GameObject kitchenPhoneUI;
 
     [Header("Clickables")]
     [SerializeField] GameObject couchClickables;
@@ -71,8 +73,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameoverPanel;
     [SerializeField] GameObject caughtText;
     [SerializeField] GameObject dinerText;
-    
-    [Header("Timer Settings")]
+    [SerializeField] GameObject input2FA;
+
+	[Header("Timer Settings")]
 	[SerializeField] float timeLeft;
 	[SerializeField] float alertStartTime;
 	[SerializeField] bool alertStarted;
@@ -90,7 +93,7 @@ public class GameManager : MonoBehaviour
     {
         if (buyableItems == null) GameObject.Find("BuyableItemsHolder").GetComponent<BuyableItemsHolder>();
 
-        moneySpent = 0;
+		spentMoney = 0;
         UpdateScore();
 
         player.state = PlayerState.Couch;
@@ -197,7 +200,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(float spent = 0f)
     {
-        if (spent == 0f) spent = moneySpent;
+        if (spent == 0f) spent = spentMoney;
         float roundedSpent = Mathf.Round(spent);
         scoreText.text = $"Money spent:\n${roundedSpent}";
     }
@@ -205,12 +208,17 @@ public class GameManager : MonoBehaviour
     public string BuyItem()
     {
         Item itemToBuy = buyableItems.GetRandomItem();
-        moneySpent += itemToBuy.cost;
-        UpdateScore(moneySpent);
+		spentMoney += itemToBuy.cost;
+        UpdateScore(spentMoney);
 
         string nameAndCost = itemToBuy.name + " $" + itemToBuy.cost;
 
         return nameAndCost;
+    }
+
+    public void Show2FAInput()
+    {
+        input2FA.SetActive(true);
     }
 
     public void GameOver(bool caught = false)
@@ -219,7 +227,8 @@ public class GameManager : MonoBehaviour
         gameoverPanel.SetActive(true);
 		if (caught) caughtText.SetActive(true);
         else dinerText.SetActive(true);
-        gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", moneySpent.ToString());
+        string spent = spentMoney.ToString();
+        gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", spent);
 	}
 
     public void FlickBack()
@@ -269,6 +278,7 @@ public class GameManager : MonoBehaviour
                 break;
             case Areas.Kitchen:
                 kitchenUI.SetActive(true);
+                kitchenPhoneUI.SetActive(false);
                 kitchenClickables.SetActive(true);
                 InitializeKitchen();
                 break;
