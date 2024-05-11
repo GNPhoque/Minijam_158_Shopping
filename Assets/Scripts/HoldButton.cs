@@ -44,7 +44,7 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
 		if (animatingPopup && currentPopupAnimationTime < popupAnimationTime)
 		{
-			print(currentPopupAnimationTime);
+			// print(currentPopupAnimationTime);
 			currentPopupAnimationTime += Time.deltaTime;
 			popup.anchoredPosition = Vector3.up * popupCurve.Evaluate(currentPopupAnimationTime) * popupAnimationPositionMultiplier;
 			popupText.color = new Color(popupText.color.r, popupText.color.g, popupText.color.b, popupOpacityCurve.Evaluate(currentPopupAnimationTime));
@@ -80,9 +80,7 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 		fill.fillAmount = 0;
 		animatingPopup = true;
 		currentPopupAnimationTime = 0f;
-		popupText.text = boughtPopups[UnityEngine.Random.Range(0, boughtPopups.Count)];
-		spentMoney += nextCost;
-		GameManager.instance.UpdateScore(spentMoney);
+		popupText.text = GameManager.instance.BuyItem();
 		currentHoldDuration -= holdDuration;
 	}
 }

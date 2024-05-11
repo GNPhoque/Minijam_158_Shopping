@@ -1,5 +1,4 @@
 using System.Collections;
-using System.ComponentModel.Design;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,6 +38,8 @@ public class GameManager : MonoBehaviour
     [Header("Player Settings")]
     public Player player;
     public int playerChances = 3;
+    public float moneySpent = 0f;
+    public BuyableItemsHolder buyableItems;
 
     // Mom Settings
     [Header("Mom Settings")]
@@ -87,6 +88,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (buyableItems == null) GameObject.Find("BuyableItemsHolder").GetComponent<BuyableItemsHolder>();
+
+        moneySpent = 0;
+        UpdateScore();
+
         player.state = PlayerState.Couch;
         player.activity = PlayerActivity.SittingOnCouch;
         Debug.Log("Start Game!");
@@ -189,9 +195,22 @@ public class GameManager : MonoBehaviour
 		timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 	}
 
-    public void UpdateScore(float spent)
+    public void UpdateScore(float spent = 0f)
     {
-        scoreText.text = $"Money spent:\n${spent}";
+        if (spent == 0f) spent = moneySpent;
+        float roundedSpent = Mathf.Round(spent);
+        scoreText.text = $"Money spent:\n${roundedSpent}";
+    }
+
+    public string BuyItem()
+    {
+        Item itemToBuy = buyableItems.GetRandomItem();
+        moneySpent += itemToBuy.cost;
+        UpdateScore(moneySpent);
+
+        string nameAndCost = itemToBuy.name + " $" + itemToBuy.cost;
+
+        return nameAndCost;
     }
 
     public void GameOver(bool caught = false)
@@ -200,8 +219,7 @@ public class GameManager : MonoBehaviour
         gameoverPanel.SetActive(true);
 		if (caught) caughtText.SetActive(true);
         else dinerText.SetActive(true);
-        string spentMoney = HoldButton.spentMoney.ToString();
-        gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", spentMoney);
+        gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", moneySpent.ToString());
 	}
 
     public void FlickBack()
