@@ -101,8 +101,8 @@ public class CardDetailsUpdater : MonoBehaviour
 			if (current == code2FA)
 			{
 				codeOk = true;
-				numbersCorrect.SetActive(true);
-				numbersIncorrect.SetActive(false);
+				codeCorrect.SetActive(true);
+				codeIncorrect.SetActive(false);
 			}
 			else
 			{
