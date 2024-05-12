@@ -23,7 +23,7 @@ public class CardDetailsUpdater : MonoBehaviour
 	[Header("Rotation Settings")]
 	[SerializeField] bool rotateCardNumber = false;
 	[SerializeField] bool rotate2FA = true;
-	bool rotated2FA = false;
+	[HideInInspector] public bool rotated2FA = false;
 
 	[Header("Debug")]
 	[SerializeField] string numbers = "";

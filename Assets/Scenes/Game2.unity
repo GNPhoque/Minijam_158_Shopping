@@ -2356,7 +2356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 509357885}
-  playerChances: 3
+  playerChances: 2
   buyableItems: {fileID: 2890940705405281232}
   spentMoney: 0
   use2FA: 0
@@ -2410,6 +2410,7 @@ MonoBehaviour:
   codesChangeTime: 45
   rotateCardNumber: 0
   rotate2FA: 1
+  rotated2FA: 0
   numbers: 
   code2FA: 
 --- !u!1 &631682964
@@ -3386,7 +3387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7923997420229302771, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9218820272206392500, guid: 8c1a2fae412b6c440a20a242a785eab0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4754,6 +4755,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6326963153526129964, guid: 0c35c57b29953b74c992904f1a1f38f9, type: 3}
+      propertyPath: authMessage
+      value: 
+      objectReference: {fileID: 1025662223}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

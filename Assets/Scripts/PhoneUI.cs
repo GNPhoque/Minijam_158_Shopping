@@ -20,6 +20,7 @@ public class PhoneUI : MonoBehaviour
 
     [SerializeField] TextMessage message1;
     [SerializeField] TextMessage message3;
+    [SerializeField] GameObject authMessage;
 
     bool reachedFirstCriteriaSpent = false;
 
@@ -45,5 +46,7 @@ public class PhoneUI : MonoBehaviour
             message3.message = reachedFirstCriteriaMessage;
             message3.SetMessageText();
         }
+
+        if (GameManager.instance.GetComponent<CardDetailsUpdater>().rotated2FA) authMessage.SetActive(true);
     }
 }

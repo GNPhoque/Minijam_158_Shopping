@@ -222,6 +222,7 @@ public class GameManager : MonoBehaviour
         // Check if player is at shopping window
         if (player.IsOnComputer())
         {
+            print("MOMAI: Player is on computer");
             if (player.IsShopping()) // If the player is on the shopping tab
             {
                 DecreaseChancesAndCheckIfGameOver();
