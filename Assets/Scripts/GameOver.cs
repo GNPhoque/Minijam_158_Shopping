@@ -15,6 +15,8 @@ public class GameOver : MonoBehaviour
     [SerializeField] TMP_Text variableText;
     [SerializeField] bool autoRestart;
 
+    [SerializeField] AudioSource source;
+
     PlayableDirector director;
 
     // Start is called before the first frame update
@@ -38,10 +40,9 @@ public class GameOver : MonoBehaviour
             director.Play(caught);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayPianoSFX()
     {
-        
+        source.Play();
     }
 
     public void Restart()
