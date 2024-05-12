@@ -25,7 +25,7 @@ MonoBehaviour:
     m_Start: 2
     m_ClipIn: 0
     m_Asset: {fileID: 4694073156624385754}
-    m_Duration: 6.333333333333334
+    m_Duration: 10.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: -8721984306677528510}
     m_EaseInDuration: 0
@@ -124,7 +124,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 7.5
+        time: 11.683333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -133,7 +133,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 8.333333
+        time: 12.516666
         value: 1
         inSlope: 0
         outSlope: 0
@@ -172,7 +172,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 8.333333
+    m_StopTime: 12.516666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -202,7 +202,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 7.5
+        time: 11.683333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -211,7 +211,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 8.333333
+        time: 12.516666
         value: 1
         inSlope: 0
         outSlope: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
     m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: 8114198547039295333}
-    m_Duration: 8.333333333333334
+    m_Duration: 12.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: -6726747424422797842}
     m_EaseInDuration: 0
@@ -570,10 +570,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 0
+    m_Start: 0.016666666666667496
     m_ClipIn: 0
     m_Asset: {fileID: -5240593642386090602}
-    m_Duration: 8.333333333333334
+    m_Duration: 12.483333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: -2878837928757066476}
     m_EaseInDuration: 0

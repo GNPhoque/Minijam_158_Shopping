@@ -323,9 +323,16 @@ public class GameManager : MonoBehaviour
         ValueBank.gameOverType = caught ? 1 : 0;
         ValueBank.moneySpent = spentMoney;
 
-        if (player.state == PlayerState.Couch) ValueBank.reasonOfLoss = "You can't be on the shop tab while mom is looking! You've established theese rules already..";
-        else if (player.state == PlayerState.Table) ValueBank.reasonOfLoss = "Mom can see that you take her card, she has eyes just like you do";
-        else if (player.state == PlayerState.Kitchen) ValueBank.reasonOfLoss = "I don't think you would be happy if someone stole your phone either. Oh wait, you don't have one";
+        if (caught)
+        {
+            if (player.state == PlayerState.Couch) ValueBank.reasonOfLoss = "You can't be on the shop tab while mom is looking! You've established theese rules already..";
+            else if (player.state == PlayerState.Table) ValueBank.reasonOfLoss = "Mom can see that you take her card, she has eyes just like you do";
+            else if (player.state == PlayerState.Kitchen) ValueBank.reasonOfLoss = "I don't think you would be happy if someone stole your phone either. Oh wait, you don't have one";
+        }
+        else
+        {
+            ValueBank.reasonOfLoss = "I mean, the timer ran out? Not much you can do about that..";
+        }
 
         SceneManager.LoadScene("GameOver");
 

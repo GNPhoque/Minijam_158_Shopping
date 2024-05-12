@@ -24,7 +24,7 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(autoRestart) Invoke("Restart", 10f);
+        if(autoRestart) Invoke("Restart", 7.5f);
 
         string text = variableText.text;
         text = text.Replace("*money*", ValueBank.moneySpent.ToString());
