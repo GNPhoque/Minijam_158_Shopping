@@ -396,18 +396,21 @@ public class GameManager : MonoBehaviour
 	{
 		if (!AudioManager.instance.firstCriteriaReached) AudioManager.instance.PlayLoopPart1WOSnare();
 		AudioManager.instance.firstCriteriaReached = true;
+        ValueBank.criteria1Reached = true;
 	}
 
 	public void TriggerSecondCriteriaReached()
 	{
 		if (!AudioManager.instance.secondCriteriaReached) AudioManager.instance.PlayLoopPart1WSnare();
 		AudioManager.instance.secondCriteriaReached = true;
+        ValueBank.criteria2Reached = true;
 	}
 
 	public void TriggerThirdCriteriaReached()
 	{
 		if (!AudioManager.instance.thirdCriteriaReached) AudioManager.instance.PlayLoopPart2();
 		AudioManager.instance.thirdCriteriaReached = true;
+        ValueBank.criteria3Reached = true;
 	}
 
 	#region Area Functions

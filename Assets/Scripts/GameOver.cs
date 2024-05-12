@@ -19,6 +19,11 @@ public class GameOver : MonoBehaviour
 
     [SerializeField] AudioSource source;
 
+    [SerializeField] GameObject star1;
+    [SerializeField] GameObject star2;
+    [SerializeField] GameObject star3;
+    [SerializeField] GameObject star4;
+
     PlayableDirector director;
 
     // Start is called before the first frame update
@@ -42,7 +47,13 @@ public class GameOver : MonoBehaviour
         director = GetComponent<PlayableDirector>();
 
         if (ValueBank.gameOverType == 0) // not caught
+        {
             director.Play(notCaught);
+            if (ValueBank.criteria1Reached) star1.SetActive(true);
+            if (ValueBank.criteria2Reached) star2.SetActive(true);
+            if (ValueBank.criteria3Reached) star3.SetActive(true);
+            if (ValueBank.criteria4Reached) star4.SetActive(true);
+        }
         else // caught 
             director.Play(caught);
     }
