@@ -29,7 +29,7 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(autoRestart) Invoke("Restart", 7.5f);
+        if(autoRestart) Invoke("Restart", 10f);
 
         string text = variableText.text;
         text = text.Replace("*money*", ValueBank.moneySpent.ToString());
@@ -49,15 +49,16 @@ public class GameOver : MonoBehaviour
         if (ValueBank.gameOverType == 0) // not caught
         {
             director.Play(notCaught);
-            if (ValueBank.criteria1Reached) star1.SetActive(true);
+
+			if (ValueBank.criteria1Reached) star1.SetActive(true);
             if (ValueBank.criteria2Reached) star2.SetActive(true);
             if (ValueBank.criteria3Reached) star3.SetActive(true);
             if (ValueBank.criteria4Reached) star4.SetActive(true);
 
             ValueBank.criteria1Reached = false;
-            ValueBank.criteria1Reached = false;
-            ValueBank.criteria1Reached = false;
-            ValueBank.criteria1Reached = false;
+            ValueBank.criteria2Reached = false;
+            ValueBank.criteria3Reached = false;
+            ValueBank.criteria4Reached = false;
 
 		}
         else // caught 
