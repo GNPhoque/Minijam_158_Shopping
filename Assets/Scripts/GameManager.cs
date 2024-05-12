@@ -157,10 +157,14 @@ public class GameManager : MonoBehaviour
 
     public void MomAI(bool bypassWaiting = false)
     {
-        if (DEBUG_MOM_THINKING) print("mom ai");
+        if (DEBUG_MOM_THINKING) print("MOMAI: AI");
 
-        momAttacking = true;
-        StartCoroutine(MomTick(bypassWaiting: bypassWaiting));
+        print("MOMAI: Attacking");
+        if (!momAttacking)
+        {
+            momAttacking = true;
+            StartCoroutine(MomTick(bypassWaiting: bypassWaiting));
+        }
     }
 
     int GetRandomMomDelay()
@@ -171,6 +175,12 @@ public class GameManager : MonoBehaviour
     // Mom Functions
     IEnumerator MomTick(bool bypassWaiting)
     {
+        /*if (momAttacking)
+        {
+            print("MOMAI: Tried to spawn another instance");
+            yield break; // this, not yield return null;
+        }*/
+
         if (!bypassWaiting)
         {
             if (DEBUG_MOM_THINKING) print("waiting for movement opportunity");
@@ -179,22 +189,27 @@ public class GameManager : MonoBehaviour
         }
         else if (DEBUG_MOM_THINKING) print("bypassed waiting");
 
-        if (DEBUG_MOM_THINKING) print("MOMAI: Tick");
+        if (DEBUG_MOM_THINKING) print("MOMAI: Movement");
 
         // If player is at couch, then spawn mom at couch
         if (player.IsSittingOnCouch()) StartCoroutine(MomAtCouch());
         else
         {
-            // Wait a few seconds for the player to get back to the couch area
-            if (DEBUG_MOM_THINKING) print("MOMAI: Stalled");
-            yield return new WaitForSeconds(1.5f);
-            StartCoroutine(MomTick(bypassWaiting));
+            while (!player.IsSittingOnCouch())
+            {
+                // Wait a few seconds for the player to get back to the couch area
+                if (DEBUG_MOM_THINKING) print("MOMAI: Stalled");
+                yield return new WaitForSeconds(1.5f);
+            }
+            StartCoroutine(MomAtCouch());
         }
     }
 
     IEnumerator MomAtCouch()
     {
-        momObject?.EnableMomAtCouch();
+        print("MOMAI: Successful movement");
+
+        momObject.EnableMomAtCouch();
 
         string momAction = "NONE";
         float delayBeforeLeave = 0.5f;
@@ -246,6 +261,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(3f); // small delay to finish animations
 
+        print("MOMAI: Not attacking");
         momAttacking = false;
     }
 
