@@ -53,8 +53,8 @@ MonoBehaviour:
     cost: 2.99
   - name: Sith Quest
     cost: 12.99
-  - name: Milk
-    cost: 3.99
+  - name: 50 Milk Cartridges
+    cost: 200
   - name: Old TV
     cost: 499.99
   - name: Billboard Ad
@@ -65,3 +65,11 @@ MonoBehaviour:
     cost: 5
   - name: 10K Marbles
     cost: 515
+  - name: Golden Nintendo Switch Pro-Controller
+    cost: 10000
+  - name: Luis Mutton Purse
+    cost: 3500
+  - name: Acoustic Piano
+    cost: 11500
+  - name: Limited Edition Barbie Doll
+    cost: 3500

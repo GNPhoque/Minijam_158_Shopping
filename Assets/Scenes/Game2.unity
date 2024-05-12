@@ -2359,6 +2359,10 @@ MonoBehaviour:
   buyableItems: {fileID: 2890940705405281232}
   spentMoney: 0
   use2FA: 0
+  FIRST_SPENT_CRITERIA: 10000
+  SECOND_SPENT_CRITERIA: 25000
+  THIRD_SPENT_CRITERIA: 75000
+  SCALE_CRITERIAS: 1
   momObject: {fileID: 139885890}
   startMomDelay: 10
   endMomDelay: 30
@@ -2381,9 +2385,6 @@ MonoBehaviour:
   dinerText: {fileID: 631682964}
   input2FA: {fileID: 829031576}
   timeLeft: 150
-  alertStartTime: 30
-  alertStarted: 0
-  timeAlert: {fileID: 0}
   eligibleToStartTimer: 0
 --- !u!114 &627691200
 MonoBehaviour:
