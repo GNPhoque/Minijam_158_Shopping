@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mom : MonoBehaviour
 {
-    [SerializeField] private AnimatedObject momCouchAnim;
+    public AnimatedObject momCouchAnim;
     public bool momActive = false;
 
     // Start is called before the first frame update

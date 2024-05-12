@@ -148,6 +148,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (!momAttacking) MomAI(false);
+        momObject.momCouchAnim.gameObject.GetComponent<SpriteRenderer>().enabled = player.state == PlayerState.Couch;
     }
 
     public void SetActionText(string actionName)
