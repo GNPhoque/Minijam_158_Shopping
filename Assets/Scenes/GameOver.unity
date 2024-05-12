@@ -190,7 +190,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: 153724925}
   - component: {fileID: 153724927}
   - component: {fileID: 153724926}
+  - component: {fileID: 153724928}
   m_Layer: 5
   m_Name: StarEmpty (4)
   m_TagString: Untagged
@@ -355,6 +356,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 153724924}
   m_CullTransparentMesh: 1
+--- !u!95 &153724928
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153724924}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f75769cf7a6a1514fa0c3e7aa759720e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &189284530
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +494,7 @@ GameObject:
   - component: {fileID: 376337415}
   - component: {fileID: 376337417}
   - component: {fileID: 376337416}
+  - component: {fileID: 376337418}
   m_Layer: 5
   m_Name: StarEmpty (3)
   m_TagString: Untagged
@@ -537,6 +560,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376337414}
   m_CullTransparentMesh: 1
+--- !u!95 &376337418
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376337414}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f75769cf7a6a1514fa0c3e7aa759720e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &445197008
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,7 +955,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1751,6 +1795,7 @@ GameObject:
   - component: {fileID: 1524317639}
   - component: {fileID: 1524317641}
   - component: {fileID: 1524317640}
+  - component: {fileID: 1524317642}
   m_Layer: 5
   m_Name: StarEmpty (2)
   m_TagString: Untagged
@@ -1816,6 +1861,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524317638}
   m_CullTransparentMesh: 1
+--- !u!95 &1524317642
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524317638}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f75769cf7a6a1514fa0c3e7aa759720e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1796171224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1905,7 +1971,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2275,6 +2341,22 @@ PlayableDirector:
     value: {fileID: 709469925}
   - key: {fileID: -8200562144154218376, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
     value: {fileID: 709469925}
+  - key: {fileID: 580912179139373434, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
+    value: {fileID: 2141365191}
+  - key: {fileID: -4941686998805971150, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
+    value: {fileID: 1524317642}
+  - key: {fileID: -2103581650528113522, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
+    value: {fileID: 376337418}
+  - key: {fileID: -6787122419457853090, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
+    value: {fileID: 153724928}
+  - key: {fileID: 4185598466808103796, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
+    value: {fileID: 2141365187}
+  - key: {fileID: 895472143813988869, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
+    value: {fileID: 1524317638}
+  - key: {fileID: 37485533418918042, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
+    value: {fileID: 376337414}
+  - key: {fileID: -7545319388779348871, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
+    value: {fileID: 153724924}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &1910755315
@@ -2385,6 +2467,7 @@ GameObject:
   - component: {fileID: 2141365188}
   - component: {fileID: 2141365190}
   - component: {fileID: 2141365189}
+  - component: {fileID: 2141365191}
   m_Layer: 5
   m_Name: StarEmpty (1)
   m_TagString: Untagged
@@ -2450,6 +2533,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2141365187}
   m_CullTransparentMesh: 1
+--- !u!95 &2141365191
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141365187}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f75769cf7a6a1514fa0c3e7aa759720e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
