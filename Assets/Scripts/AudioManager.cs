@@ -39,6 +39,7 @@ public class AudioManager : MonoBehaviour
 	[Header("Sound Effects")]
     [SerializeField] AudioClip[] clickClips;
     [SerializeField] AudioClip[] buyClips;
+	[SerializeField] AudioClip caughtShoppingSFX;
 
     public void PlayClick(int index = 0, bool random = false)
     {
@@ -60,6 +61,11 @@ public class AudioManager : MonoBehaviour
 	public void PlayRandomBuy()
 	{
 		PlayBuy(random: true);
+	}
+
+	public void PlayCaughtShopping()
+	{
+		PlaySfx(caughtShoppingSFX);
 	}
 
 	public void PlayRandomSfx(AudioClip[] soundEffects)

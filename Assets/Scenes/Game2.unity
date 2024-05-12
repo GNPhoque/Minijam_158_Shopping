@@ -3627,6 +3627,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 24300002, guid: bd34cdbced788b34fae0a88c7dfffc97, type: 2}
     - target: {fileID: 3126382965478846375, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
+      propertyPath: caughtShoppingSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: dcad9c9f855e2274a9bda146d7ef75fa, type: 3}
+    - target: {fileID: 3126382965478846375, guid: f492c1c36e4cc274cb6d3a3e59b149fd, type: 3}
       propertyPath: buyClips.Array.size
       value: 2
       objectReference: {fileID: 0}

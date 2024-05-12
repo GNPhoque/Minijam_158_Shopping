@@ -269,7 +269,11 @@ public class GameManager : MonoBehaviour
     public void DecreaseChancesAndCheckIfGameOver()
     {
         playerChances -= 1;
-        if (playerChances > 0) return;
+        if (playerChances > 0)
+        {
+            AudioManager.instance.PlayCaughtShopping();
+            return;
+        }
 
         Debug.Log("you lost");
         GameOver(caught: true);
