@@ -48,8 +48,10 @@ public class GameManager : MonoBehaviour
     [Header("Criterias")]
     public float FIRST_SPENT_CRITERIA = 15_000;
     public float SECOND_SPENT_CRITERIA = 50_000;
-    public float THIRD_SPENT_CRITERIA = 100_000;
+    public float THIRD_SPENT_CRITERIA = 75_000;
+    public float FOURTH_SPENT_CRITERIA = 100_000;
     public bool SCALE_CRITERIAS = true;
+    public int SCALE_FROM_TIME = 150;
 
 	// Mom Settings
 	[Header("Mom Settings")]
@@ -114,6 +116,18 @@ public class GameManager : MonoBehaviour
 
         player.state = PlayerState.Couch;
         player.activity = PlayerActivity.SittingOnCouch;
+        
+        // Scale the criterias based on time
+        if (SCALE_CRITERIAS)
+        {
+            // Criterias should be three times as hard as initial scaling time
+            float scalingFactor = (timeLeft / SCALE_FROM_TIME);
+            FIRST_SPENT_CRITERIA *= scalingFactor;
+            SECOND_SPENT_CRITERIA *= scalingFactor;
+            THIRD_SPENT_CRITERIA *= scalingFactor;
+            FOURTH_SPENT_CRITERIA *= scalingFactor;
+        }
+        
         Debug.Log("Start Game!");
 
         StartCoroutine(MomTick(bypassWaiting: true));
