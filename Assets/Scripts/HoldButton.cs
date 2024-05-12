@@ -43,8 +43,6 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
 	private void Update()
 	{
-		if (tutoBoughtMultiple) return;
-
 		if (animatingPopup && currentPopupAnimationTime < popupAnimationTime)
 		{
 			// print(currentPopupAnimationTime);
@@ -59,7 +57,7 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 			}
 		}
 
-		if (isHeldDown)
+		if (!tutoBoughtMultiple && isHeldDown)
 		{
 			if (!MAIN_MENU && !cardDetailsUpdater.CanBuy)
 			{
