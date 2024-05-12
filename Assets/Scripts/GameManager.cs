@@ -122,6 +122,8 @@ public class GameManager : MonoBehaviour
 
         AudioManager.instance.PlayLoopPreIntro();
         AudioManager.instance.ForcePlayMusicLoop();
+
+        ValueBank.totalTime = timeLeft;
     }
 
     private void Update()
