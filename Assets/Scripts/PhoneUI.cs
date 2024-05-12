@@ -47,6 +47,6 @@ public class PhoneUI : MonoBehaviour
             message3.SetMessageText();
         }
 
-        if (GameManager.instance.GetComponent<CardDetailsUpdater>().rotated2FA) authMessage.SetActive(true);
+        if (GameManager.instance && GameManager.instance.GetComponent<CardDetailsUpdater>().rotated2FA) authMessage.SetActive(true);
     }
 }

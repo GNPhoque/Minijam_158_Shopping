@@ -13,6 +13,8 @@ public class GameOver : MonoBehaviour
     [SerializeField] TimelineAsset notCaught;
 
     [SerializeField] TMP_Text variableText;
+    [SerializeField] TMP_Text reasonText;
+
     [SerializeField] bool autoRestart;
 
     [SerializeField] AudioSource source;
@@ -22,7 +24,7 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(autoRestart) Invoke("Restart", 5f);
+        if(autoRestart) Invoke("Restart", 10f);
 
         string text = variableText.text;
         text = text.Replace("*money*", ValueBank.moneySpent.ToString());
@@ -31,6 +33,11 @@ public class GameOver : MonoBehaviour
         text = text.Replace("*totalTime*", formattedTime);
         variableText.text = text;
         variableText.gameObject.SetActive(false);
+
+        string reason = ValueBank.reasonOfLoss;
+        text = reasonText.text;
+        text = text.Replace("*reason*", reason);
+        reasonText.text = text;
 
         director = GetComponent<PlayableDirector>();
 
