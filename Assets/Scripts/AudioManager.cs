@@ -16,6 +16,7 @@ public enum MusicLoopTracks
 
 public class AudioManager : MonoBehaviour
 {
+	[Header("Music")]
 	[SerializeField] AudioSource[] musicLoops;
 	[SerializeField] AudioSource sfx;
 	int currentPlaying = 0;
@@ -35,7 +36,39 @@ public class AudioManager : MonoBehaviour
 	float looptime = 0f;
 	public MusicLoopTracks nextMuteChangeMethod = MusicLoopTracks.None;
 
-	private void Awake()
+	[Header("Sound Effects")]
+    [SerializeField] AudioClip[] clickClips;
+    [SerializeField] AudioClip[] buyClips;
+
+    public void PlayClick(int index = 0, bool random = false)
+    {
+		if (random) PlayRandomSfx(clickClips);
+		else PlaySfx(clickClips[index]);
+    }
+
+	public void PlayRandomClick()
+	{
+		PlayClick(random: true);
+	}
+	
+	public void PlayBuy(int index = 0, bool random = false)
+	{
+        if (random) PlayRandomSfx(buyClips);
+        else PlaySfx(buyClips[index]);
+    }
+
+	public void PlayRandomBuy()
+	{
+		PlayBuy(random: true);
+	}
+
+	public void PlayRandomSfx(AudioClip[] soundEffects)
+	{
+        int index = UnityEngine.Random.Range(0, soundEffects.Length - 1);
+		PlaySfx(soundEffects[index]);
+    }
+
+    private void Awake()
 	{
 		if (instance) Destroy(gameObject);
 		instance = this;

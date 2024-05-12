@@ -104,9 +104,12 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 		{
 			popupText.text = "B-bucks $19.99";
 
-			if(tutoBoughtMultiple) tutoOnBuyComplete?.Invoke();
-			if(tutoBoughtOne) tutoBoughtMultiple = true;
-			tutoBoughtOne = true;
+			if(tutoBoughtOne)
+			{
+				tutoBoughtMultiple = true;
+                tutoOnBuyComplete.Invoke();
+            }
+            tutoBoughtOne = true;
 		}
 		else
 		{
