@@ -109,6 +109,8 @@ public class GameManager : MonoBehaviour
     {
         if (buyableItems == null) GameObject.Find("BuyableItemsHolder").GetComponent<BuyableItemsHolder>();
 
+        if (!eligibleToStartTimer) timerText.gameObject.SetActive(false);
+
 		spentMoney = 0;
         UpdateScore();
 
@@ -298,6 +300,7 @@ public class GameManager : MonoBehaviour
         {
             firstItemBought = true;
             eligibleToStartTimer = true;
+            timerText.gameObject.SetActive(true);
             GetComponent<CardDetailsUpdater>().Start2FA();
         }
 
