@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
     {
         if (DEBUG_MOM_THINKING) print("MOMAI: AI");
 
-        print("MOMAI: Attacking");
+        if (DEBUG_MOM_THINKING) print("MOMAI: Attacking");
         if (!momAttacking)
         {
             momAttacking = true;
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator MomAtCouch()
     {
-        print("MOMAI: Successful movement");
+        if (DEBUG_MOM_THINKING) print("MOMAI: Successful movement");
 
         momObject.EnableMomAtCouch();
 
@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour
         // Check if player is at shopping window
         if (player.IsOnComputer())
         {
-            print("MOMAI: Player is on computer");
+            if (DEBUG_MOM_THINKING) print("MOMAI: Player is on computer");
             if (player.IsShopping()) // If the player is on the shopping tab
             {
                 DecreaseChancesAndCheckIfGameOver();
@@ -260,7 +260,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(3f); // small delay to finish animations
 
-        print("MOMAI: Not attacking");
+        if (DEBUG_MOM_THINKING) print("MOMAI: Not attacking");
         momAttacking = false;
     }
 
