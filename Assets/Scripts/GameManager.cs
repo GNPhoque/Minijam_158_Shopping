@@ -316,6 +316,8 @@ public class GameManager : MonoBehaviour
         else if (spentMoney >= SECOND_SPENT_CRITERIA) TriggerSecondCriteriaReached();
         else if (spentMoney >= FIRST_SPENT_CRITERIA) TriggerFirstCriteriaReached();
 
+        AudioManager.instance.PlayRandomBuy();
+
         string nameAndCost = itemToBuy.name + " $" + itemToBuy.cost;
 
         return nameAndCost;

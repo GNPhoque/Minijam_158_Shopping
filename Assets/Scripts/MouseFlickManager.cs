@@ -12,6 +12,7 @@ public class MouseFlickManager : MonoBehaviour
         {
             mouseOver = true;
             GameManager.instance.FlickBack();
+            AudioManager.instance.PlayRandomClick();
         }
     }
 
