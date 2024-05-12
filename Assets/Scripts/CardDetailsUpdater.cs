@@ -75,11 +75,6 @@ public class CardDetailsUpdater : MonoBehaviour
             }
 			else if (rotated2FA && rotate2FA) Update2FA();
         }
-
-		cardNumberCorrect.gameObject.SetActive(false);
-		cardNumberIncorrect.gameObject.SetActive(false);
-		codeCorrect.SetActive(false);
-		codeIncorrect.SetActive(false);
 	}
 
 	public void UpdateNumbers()
@@ -99,6 +94,9 @@ public class CardDetailsUpdater : MonoBehaviour
 		cardNumberText.text = newNumbers;
 
 		numbers = newNumbers;
+
+		cardNumberCorrect.gameObject.SetActive(false);
+		cardNumberIncorrect.gameObject.SetActive(false);
 	}
 
 	public void Update2FA()
@@ -113,6 +111,9 @@ public class CardDetailsUpdater : MonoBehaviour
 		code2FAText.text = $"Your 2FA code is {code2FA}";
 		go2FA.SetActive(true);
 		GameManager.instance.Show2FAInput();
+
+		codeCorrect.SetActive(false);
+		codeIncorrect.SetActive(false);
 	}
 
 	public void OnCardNumberInputChanged()
