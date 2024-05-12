@@ -53,7 +53,13 @@ public class GameOver : MonoBehaviour
             if (ValueBank.criteria2Reached) star2.SetActive(true);
             if (ValueBank.criteria3Reached) star3.SetActive(true);
             if (ValueBank.criteria4Reached) star4.SetActive(true);
-        }
+
+            ValueBank.criteria1Reached = false;
+            ValueBank.criteria1Reached = false;
+            ValueBank.criteria1Reached = false;
+            ValueBank.criteria1Reached = false;
+
+		}
         else // caught 
             director.Play(caught);
     }

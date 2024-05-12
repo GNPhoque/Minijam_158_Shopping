@@ -323,7 +323,8 @@ public class GameManager : MonoBehaviour
 		spentMoney += itemToBuy.cost;
         UpdateScore(spentMoney);
         TriggerCardFirstUsed();
-        if (spentMoney >= THIRD_SPENT_CRITERIA) TriggerThirdCriteriaReached();
+        if (spentMoney >= FOURTH_SPENT_CRITERIA) TriggerFourthCriteriaReached();
+        else if (spentMoney >= THIRD_SPENT_CRITERIA) TriggerThirdCriteriaReached();
         else if (spentMoney >= SECOND_SPENT_CRITERIA) TriggerSecondCriteriaReached();
         else if (spentMoney >= FIRST_SPENT_CRITERIA) TriggerFirstCriteriaReached();
 
@@ -411,6 +412,11 @@ public class GameManager : MonoBehaviour
 		if (!AudioManager.instance.thirdCriteriaReached) AudioManager.instance.PlayLoopPart2();
 		AudioManager.instance.thirdCriteriaReached = true;
         ValueBank.criteria3Reached = true;
+	}
+
+	public void TriggerFourthCriteriaReached()
+	{
+        ValueBank.criteria4Reached = true;
 	}
 
 	#region Area Functions
