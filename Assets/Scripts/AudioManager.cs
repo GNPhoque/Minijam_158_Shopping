@@ -22,6 +22,8 @@ public class AudioManager : MonoBehaviour
 
 	public static AudioManager instance;
 
+	public bool isMenu = false;
+
 	public bool cardShown;
 	public bool firstBuy;
 	public bool firstCriteriaReached;
@@ -63,6 +65,7 @@ public class AudioManager : MonoBehaviour
 
 	public void PlayMusicLoop(MusicLoopTracks tracksToMute)
 	{
+		if (isMenu) return;
 		print($"Changing Play Loop to {nextMuteChangeMethod}");
 		for (int i = 0; i < musicLoops.Length; i++)
 		{
