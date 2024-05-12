@@ -87,13 +87,18 @@ public class AudioManager : MonoBehaviour
 		looptime = newLoopTime;
 	}
 
-	public void ResetTriggers()
+	public void ResetLoop()
 	{
 		cardShown = false;
 		firstBuy = false;
 		firstCriteriaReached = false;
 		secondCriteriaReached = false;
 		thirdCriteriaReached = false;
+
+		for (int i = 0; i < musicLoops.Length; i++)
+		{
+			musicLoops[i].Play();
+		}
 	}
 
 	public void PlayMusicLoop(MusicLoopTracks tracksToMute)
@@ -121,6 +126,14 @@ public class AudioManager : MonoBehaviour
 
 		if (wantToSwitchTo == MusicLoopTracks.None) nextMuteChangeMethod = MusicLoopTracks.None;
 		else nextMuteChangeMethod = wantToSwitchTo;
+	}
+
+	public void StopAllLoops()
+	{
+		for (int i = 0; i < musicLoops.Length; i++)
+		{
+			musicLoops[i].Stop();
+		}
 	}
 
 	public void ForcePlayMusicLoop()

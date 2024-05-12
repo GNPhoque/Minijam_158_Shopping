@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
 
 public class GameOver : MonoBehaviour
@@ -12,12 +13,15 @@ public class GameOver : MonoBehaviour
     [SerializeField] TimelineAsset notCaught;
 
     [SerializeField] TMP_Text variableText;
+    [SerializeField] bool autoRestart;
 
     PlayableDirector director;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(autoRestart) Invoke("Restart", 5f);
+
         string text = variableText.text;
         text = text.Replace("*money*", ValueBank.moneySpent.ToString());
         TimeSpan timeSpan = TimeSpan.FromSeconds(ValueBank.totalTime);
@@ -39,4 +43,9 @@ public class GameOver : MonoBehaviour
     {
         
     }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+	}
 }

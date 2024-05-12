@@ -87,9 +87,6 @@ public class GameManager : MonoBehaviour
 
 	[Header("Timer Settings")]
 	public float timeLeft;
-	[SerializeField] float alertStartTime;
-	[SerializeField] bool alertStarted;
-	[SerializeField] AudioClip timeAlert;
     [SerializeField] bool eligibleToStartTimer = false;
 
     // Debug Values
@@ -121,6 +118,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(MomTick(bypassWaiting: true));
 
         AudioManager.instance.PlayLoopPreIntro();
+        AudioManager.instance.ResetLoop();
         AudioManager.instance.ForcePlayMusicLoop();
 
         ValueBank.totalTime = timeLeft;
@@ -134,14 +132,6 @@ public class GameManager : MonoBehaviour
             {
                 timeLeft -= Time.deltaTime;
                 DisplayTime(timeLeft);
-                if (timeLeft < alertStartTime && !alertStarted)
-                {
-                    alertStarted = true;
-                    //TODO : Find AudioSource to play timeAlert sound;
-                }
-
-                if (timeLeft < 20 && !AudioManager.instance.endingPlayed) 
-                    AudioManager.instance.PlayLoopEnding();
             }
             else
             {

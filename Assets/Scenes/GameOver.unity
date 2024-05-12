@@ -1496,6 +1496,7 @@ MonoBehaviour:
   caught: {fileID: 11400000, guid: 91aaaacd483eac1469a10b84bcf92424, type: 2}
   notCaught: {fileID: 11400000, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
   variableText: {fileID: 543899862}
+  autoRestart: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
