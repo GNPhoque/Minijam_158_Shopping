@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PhoqueScene.unity
-    guid: d72f8b7d377cdcb459adab457a8cdab5
+    path: Assets/Scenes/MainMenu.unity
+    guid: 1c5131a03bc29ab4b8925a0141e763bc
   - enabled: 1
-    path: Assets/Scenes/Game.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/Game2.unity
+    guid: 1bc5f941571c6294bb3abb5a7b769335
   m_configObjects: {}

@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
 	[SerializeField] bool MAIN_MENU;
+	[SerializeField] UnityEvent tutoOnBuyComplete;
+	bool tutoBoughtOne;
+	bool tutoBoughtMultiple;
 
 	[SerializeField] float holdDuration;
 	[SerializeField] float nextCost;
@@ -39,6 +43,8 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
 	private void Update()
 	{
+		if (tutoBoughtMultiple) return;
+
 		if (animatingPopup && currentPopupAnimationTime < popupAnimationTime)
 		{
 			// print(currentPopupAnimationTime);
@@ -97,6 +103,10 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 		if (MAIN_MENU)
 		{
 			popupText.text = "B-bucks $19.99";
+
+			if(tutoBoughtMultiple) tutoOnBuyComplete?.Invoke();
+			if(tutoBoughtOne) tutoBoughtMultiple = true;
+			tutoBoughtOne = true;
 		}
 		else
 		{
