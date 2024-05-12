@@ -1040,7 +1040,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1186911910}
-  - component: {fileID: 1186911909}
   m_Layer: 0
   m_Name: GameOver
   m_TagString: Untagged
@@ -1048,18 +1047,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1186911909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186911908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f036c4de15378814e88d56b5eab4b2bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1186911910
 Transform:
   m_ObjectHideFlags: 0
@@ -1452,6 +1439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1910755312}
+  - component: {fileID: 1910755315}
   - component: {fileID: 1910755314}
   m_Layer: 0
   m_Name: GameOverRoot
@@ -1489,7 +1477,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 91aaaacd483eac1469a10b84bcf92424, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -1524,6 +1512,20 @@ PlayableDirector:
     value: {fileID: 1802399279}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &1910755315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910755311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f036c4de15378814e88d56b5eab4b2bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caught: {fileID: 11400000, guid: 91aaaacd483eac1469a10b84bcf92424, type: 2}
+  notCaught: {fileID: 11400000, guid: aaed8df21e449ef40959a5a173c94514, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

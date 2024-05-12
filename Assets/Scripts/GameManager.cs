@@ -326,12 +326,17 @@ public class GameManager : MonoBehaviour
 
     public void GameOver(bool caught = false)
     {
-        Time.timeScale = 0f;
+        ValueBank.gameOverType = caught ? 1 : 0;
+        ValueBank.moneySpent = spentMoney;
+
+        SceneManager.LoadScene("GameOver");
+
+        /*Time.timeScale = 0f;
         gameoverPanel.SetActive(true);
         if (caught) caughtText.SetActive(true);
         else dinerText.SetActive(true);
         string spent = spentMoney.ToString();
-        gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", spent);
+        gameOverScoreText.text = gameOverScoreText.text.Replace("*score*", spent);*/
 	}
 
     public void FlickBack()
