@@ -46,9 +46,10 @@ public class GameManager : MonoBehaviour
     bool firstItemBought = false;
 
     [Header("Criterias")]
-    public const float FIRST_SPENT_CRITERIA = 10_000;
-    public const float SECOND_SPENT_CRITERIA = 25_000;
-    public const float THIRD_SPENT_CRITERIA = 75_000;
+    public float FIRST_SPENT_CRITERIA = 15_000;
+    public float SECOND_SPENT_CRITERIA = 50_000;
+    public float THIRD_SPENT_CRITERIA = 100_000;
+    public bool SCALE_CRITERIAS = true;
 
 	// Mom Settings
 	[Header("Mom Settings")]
@@ -132,6 +133,8 @@ public class GameManager : MonoBehaviour
             {
                 timeLeft -= Time.deltaTime;
                 DisplayTime(timeLeft);
+
+                if (timeLeft <= 20 && !AudioManager.instance.endingPlayed) AudioManager.instance.PlayLoopEnding();
             }
             else
             {
