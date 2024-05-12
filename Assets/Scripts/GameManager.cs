@@ -93,8 +93,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool eligibleToStartTimer = false;
 
     // Debug Values
-    const bool DEBUG_MOM_COUCH_THINKING = true;
-    const bool DEBUG_MOM_THINKING = true;
+    const bool DEBUG_MOM_COUCH_THINKING = false;
+    const bool DEBUG_MOM_THINKING = false;
     const bool DEBUG_FLICKING = false;
 
     private void Awake()
